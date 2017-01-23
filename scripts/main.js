@@ -103,10 +103,10 @@ function Graph(){
 var g = new Graph();
 console.log(g.searchMinRoute(1,5));
 
-var nodes = g.nodesAdapter();
+var nodes =new vis.DataSet(g.nodesAdapter());
 
   // create an array with edges
-var edges = g.edgesAdapter();
+var edges = new vis.DataSet(g.edgesAdapter());
 
   // create a network
 var container = document.getElementById('mynetwork');
