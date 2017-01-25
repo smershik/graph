@@ -13,7 +13,12 @@ head
 		mocha.setup('bdd');
 		var assert = chai.assert;
 body
-	div#mynetwork
+	div.main-container
+		div#mynetwork
+		form
+			input(type="text" placeholder = "start node" id="startNode")
+			input(type="text" placeholder = "finish node" id="finishNode")
+			input(type="button" value = "search min route" id="routeButton")
 	script(src="scripts/tests.js")
 	div#mocha
 	script.

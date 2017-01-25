@@ -15,7 +15,14 @@
   </script>
 </head>
 <body>
-  <div id="mynetwork"></div>
+  <div class="main-container">
+    <div id="mynetwork"></div>
+    <form>
+      <input type="text" placeholder="start node" id="startNode">
+      <input type="text" placeholder="finish node" id="finishNode">
+      <input type="button" value="search min route" id="routeButton">
+    </form>
+  </div>
   <script src="scripts/tests.js"></script>
   <div id="mocha"></div>
   <script>mocha.run();</script>

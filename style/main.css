@@ -2,4 +2,9 @@
       width: 600px;
       height: 400px;
       border: 1px solid lightgray;
+      margin-bottom: 10px;
+    }
+
+    .main-container{
+    	margin: 20px;
     }

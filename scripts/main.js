@@ -38,7 +38,7 @@ function Graph(){
 			for(var i=0;i<openNodes.length-1; i++){
 				distance+=nodes[openNodes[i]][openNodes[i+1]];
 			}
-			routes.push(distance);
+			routes.push({dist:distance,route:openNodes});
 		} else {
 			for(var i in nodes[startNode]){
 				if(openNodes.indexOf(+i, 0)==-1) {
@@ -53,7 +53,15 @@ function Graph(){
 		if (startNode==finishNode) return 0;
 		routes = [];
 		searchRoutes(startNode,finishNode);
-		return Math.min.apply(null, routes);
+		var minDistance = routes[0].dist;
+		var result = routes[0];
+		for(var i = 0; i<routes.length; i++){
+			if(routes[i].dist<minDistance){
+				minDistance = routes[i].dist;
+				result = routes[i];
+			}
+		}
+		return result;
 	};
 
 	this.addNode = function(name, links){
@@ -88,7 +96,7 @@ function Graph(){
 					if(item['from']==i&&item['to']==links) check = true;
 				});
 				if(!check)
-					result.push({from: +links, to: +i, label: nodes[links][i],font:{align: 'middle'}});
+					result.push({id:(links + i),from: +links, to: +i, label: nodes[links][i],font:{align: 'middle'}});
 			}
 		}
 		return result;
@@ -96,23 +104,46 @@ function Graph(){
 	
 	}
 
+
+// var startNodeId;
 		
-//need visualisation
-//
 
-var g = new Graph();
-console.log(g.searchMinRoute(1,5));
+	var g = new Graph();
+	var nodes =new vis.DataSet(g.nodesAdapter());
+	var edges = new vis.DataSet(g.edgesAdapter());
+	var container = document.getElementById('mynetwork');
+	var data = {
+	  nodes: nodes,
+	  edges: edges
+	  };
+	var options = {
+	};
+	var network = new vis.Network(container, data, options);
 
-var nodes =new vis.DataSet(g.nodesAdapter());
 
-  // create an array with edges
-var edges = new vis.DataSet(g.edgesAdapter());
+document.getElementById('routeButton').onclick = function(){
+	var startNode = document.getElementById('startNode').value;
+	var finishNode = document.getElementById('finishNode').value;
+	var routeNodes = g.searchMinRoute(startNode,finishNode).route;
+	var routeEdges = function (routeNodes) {
+		var result= [];
+		for(var i =0; i<routeNodes.length-1; i++){
+			if(routeNodes[i]<routeNodes[i+1]){
+				result.push(routeNodes[i] +''+ routeNodes[i+1]);
+			}else{
+				result.push(routeNodes[i+1] +''+ routeNodes[i]);
+			}
+		}
+		return result;
+	}
+	console.log(routeEdges(routeNodes));
+	network.setSelection({
+		nodes:routeNodes,
+		edges:routeEdges(routeNodes)
+	},{
+		highlightEdges:false
+	});
+}
 
-  // create a network
-var container = document.getElementById('mynetwork');
-var data = {
-  nodes: nodes,
-  edges: edges
-  };
-var options = {};
-var network = new vis.Network(container, data, options);
+
+
