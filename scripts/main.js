@@ -49,8 +49,8 @@ function Graph(){
 	};
 
 	this.searchMinRoute = function(startNode,finishNode){
-		if (nodes[startNode]==undefined||nodes[finishNode]==undefined) return 'not existing node';
-		if (startNode==finishNode) return 0;
+		if (nodes[startNode]==undefined||nodes[finishNode]==undefined) return null;
+		if (startNode==finishNode) return startNode;
 		routes = [];
 		searchRoutes(startNode,finishNode);
 		var minDistance = routes[0].dist;
@@ -104,10 +104,6 @@ function Graph(){
 	
 	}
 
-
-// var startNodeId;
-		
-
 	var g = new Graph();
 	var nodes =new vis.DataSet(g.nodesAdapter());
 	var edges = new vis.DataSet(g.edgesAdapter());
@@ -124,25 +120,30 @@ function Graph(){
 document.getElementById('routeButton').onclick = function(){
 	var startNode = document.getElementById('startNode').value;
 	var finishNode = document.getElementById('finishNode').value;
-	var routeNodes = g.searchMinRoute(startNode,finishNode).route;
-	var routeEdges = function (routeNodes) {
-		var result= [];
-		for(var i =0; i<routeNodes.length-1; i++){
-			if(routeNodes[i]<routeNodes[i+1]){
-				result.push(routeNodes[i] +''+ routeNodes[i+1]);
-			}else{
-				result.push(routeNodes[i+1] +''+ routeNodes[i]);
+	var minRoute = g.searchMinRoute(startNode,finishNode);
+	if (minRoute===null) console.log('nodes not exist');
+	else if(minRoute==startNode) network.selectNodes([startNode],false);
+	else{ 
+		var routeNodes =minRoute.route;
+		var routeEdges = function (routeNodes) {
+			var result= [];
+			for(var i =0; i<routeNodes.length-1; i++){
+				if(routeNodes[i]<routeNodes[i+1]){
+					result.push(routeNodes[i] +''+ routeNodes[i+1]);
+				}else{
+					result.push(routeNodes[i+1] +''+ routeNodes[i]);
+				}
 			}
+			return result;
 		}
-		return result;
+		console.log(routeEdges(routeNodes));
+		network.setSelection({
+			nodes:routeNodes,
+			edges:routeEdges(routeNodes)
+		},{
+			highlightEdges:false
+		});
 	}
-	console.log(routeEdges(routeNodes));
-	network.setSelection({
-		nodes:routeNodes,
-		edges:routeEdges(routeNodes)
-	},{
-		highlightEdges:false
-	});
 }
 
 
