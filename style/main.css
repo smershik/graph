@@ -8,3 +8,15 @@
     .main-container{
     	margin: 20px;
     }
+
+    .add-remove{
+    	margin:5px;
+    }
+
+    .valid{
+    	border: 1px solid red;
+    }
+
+    .invalid{
+    	border: 1px solid green;
+    }

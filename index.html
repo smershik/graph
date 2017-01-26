@@ -16,13 +16,18 @@
 </head>
 <body>
   <div class="main-container">
+    <div class="add-remove">
+      <button id="add-node">Add node</button>
+      <button id="remove-node">Remove node</button>
+    </div>
     <div id="mynetwork"></div>
-    <form>
+    <div class="search-min-route">
       <input type="text" placeholder="start node" id="startNode">
       <input type="text" placeholder="finish node" id="finishNode">
-      <input type="button" value="search min route" id="routeButton">
-    </form>
+      <input type="button" id="routeButton" value="Search min route">
+    </div>
   </div>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
   <script src="scripts/tests.js"></script>
   <div id="mocha"></div>
   <script>mocha.run();</script>

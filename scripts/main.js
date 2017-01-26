@@ -146,5 +146,24 @@ document.getElementById('routeButton').onclick = function(){
 	}
 }
 
+$(document).ready(function(){
+    $('#routeButton').on('click',function(){
+    	var sn = $('#startNode,#finishNode');
+    	for(var i in sn){
+    		if (isValidNode(sn[i].value)) $(sn[i]).removeClass("valid").addClass("invalid");
+    		else $(sn[i]).removeClass("invalid").addClass("valid");
+    	}
+
+    });
+
+});
+
+
+var isValidNode = function (node){
+	var pattern = new RegExp('[0-9]+');
+	return pattern.test(node);
+}
+
+
 
 

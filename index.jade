@@ -14,13 +14,18 @@ head
 		var assert = chai.assert;
 body
 	div.main-container
+		div.add-remove
+			button#add-node Add node
+			button#remove-node Remove node
 		div#mynetwork
-		form
+		div.search-min-route
 			input(type="text" placeholder = "start node" id="startNode")
 			input(type="text" placeholder = "finish node" id="finishNode")
-			input(type="button" value = "search min route" id="routeButton")
+			input(type="button" id="routeButton" value="Search min route")
+	script(src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous")
 	script(src="scripts/tests.js")
 	div#mocha
 	script.
 		mocha.run();
 	script(src="scripts/main.js")
+	
